@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Hotel Booking</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+
+<!-- ══════════ AUTH ══════════ -->
+<div id="auth-screen">
+  <div class="auth-wrap">
+    
+    </div>
+    <div class="auth-form">
+      <h2>Welcome back</h2>
+      <p>Sign in to your account to continue</p>
+      <div class="tab-row">
+        <button class="tab-btn active" id="login-tab"    onclick="switchTab('login')">Login</button>
+        <button class="tab-btn"        id="register-tab" onclick="switchTab('register')">Register</button>
+      </div>
+      <div class="field-group" id="name-wrap" style="display:none">
+        <label>Full Name</label>
+        <input id="auth-name" type="text" />
+      </div>
+      <div class="field-group">
+        <label>Email</label>
+        <input id="auth-email" type="email"/>
+      </div>
+      <div class="field-group">
+        <label>Password</label>
+        <input id="auth-password" type="password"/>
+      </div>
+      <button class="btn btn-accent btn-full" onclick="submitAuth()" id="auth-btn">Sign In</button>
+      <div class="err-msg" id="auth-msg"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ APP ══════════ -->
+<div id="app">
+  <header class="topbar">
+
+    <div class="topbar-user">
+      <span id="topbar-user-name"></span>
+      <button onclick="logout()">Sign out</button>
+    </div>
+  </header>
+  <div class="shell">
+    <nav class="sidebar">
+      <button class="nav-btn active" id="nav-hotels"     onclick="showPage('hotels')"><span>Hotels</span></button>
+      <button class="nav-btn"        id="nav-mybookings" onclick="showPage('mybookings')"><span>My Bookings</span></button>
+      <button class="nav-btn"        id="nav-admin"      onclick="showPage('admin')" style="display:none"><span>Admin Panel</span></button>
+      <div class="spacer"></div>
+      <button class="nav-btn" onclick="logout()"><span>Logout</span></button>
+    </nav>
+    <main class="main" id="main-content"></main>
+  </div>
+  <div id="status-bar"></div>
+</div>
+
+<!-- ══════════ PAYMENT MODAL ══════════ -->
+<div class="overlay" id="payment-overlay">
+  <div class="modal">
+    <div id="payment-form-view">
+      <div class="modal-header">
+        <div>
+          <h3>Complete your booking</h3>
+          <p>Enter your payment details below</p>
+        </div>
+        <button class="close-btn" onclick="closePayment()">✕</button>
+      </div>
+      <div class="modal-body">
+        <div class="summary-box" id="pay-summary"></div>
+        <div class="field-group">
+          <label>Cardholder Name</label>
+          <input id="pay-name" type="text" placeholder="FirstName LastName" />
+        </div>
+        <div class="field-group">
+          <label>Card Number</label>
+          <div class="card-wrap">
+            <span class="card-icon-abs">💳</span>
+            <input id="pay-card" type="text" placeholder="1234 5678 9012 3456" maxlength="19" oninput="fmtCard(this)" />
+          </div>
+        </div>
+        <div class="input-row">
+          <div class="field-group">
+            <label>Expiry</label>
+            <input id="pay-expiry" type="text" placeholder="MM / YY" maxlength="7" oninput="fmtExpiry(this)" />
+          </div>
+          <div class="field-group">
+            <label>CVV</label>
+            <input id="pay-cvv" type="text" placeholder="123" maxlength="3" />
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-accent btn-full" id="pay-btn" onclick="processPayment()">Pay Now</button>
+        <button class="btn btn-ghost  btn-full" onclick="closePayment()">Cancel</button>
+        <div class="err-msg" id="pay-msg" style="text-align:center"></div>
+      </div>
+    </div>
+    <div class="payment-success" id="payment-success-view">
+      <div class="success-icon">✅</div>
+      <h3>Booking Confirmed!</h3>
+      <p id="success-detail"></p>
+      <p style="font-size:.82rem;color:var(--muted)">Your reservation is saved under My Bookings.</p>
+      <button class="btn btn-accent" onclick="closePayment(); showPage('mybookings')">View My Bookings</button>
+      <button class="btn btn-ghost"  onclick="closePayment()">Book Another Room</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ SCRIPTS ══════════ -->
+<script src="js/utils.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/hotels.js"></script>
+<script src="js/booking.js"></script>
+<script src="js/admin.js"></script>
+</body>
+</html>

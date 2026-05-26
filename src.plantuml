@@ -1,0 +1,120 @@
+@startuml
+
+!theme plain
+top to bottom direction
+skinparam linetype ortho
+
+class AdminController {
+  - roomRepository: RoomRepository
+  - userRepository: UserRepository
+  - bookingService: BookingService
+  - hotelRepository: HotelRepository
+}
+class AuthController {
+  - bookingService: BookingService
+}
+class AuthControllerTest {
+  - mockMvc: MockMvc
+}
+class Booking {
+  - hotelID: int
+  - customerID: int
+  - checkOutDate: LocalDate
+  - bookingID: int
+  - checkInDate: LocalDate
+  - roomID: int
+}
+class BookingController {
+  - bookingService: BookingService
+}
+class BookingControllerTest {
+  - objectMapper: ObjectMapper
+  - mockMvc: MockMvc
+  - testUserId: int
+}
+class BookingRepository
+class BookingService {
+  - hotelRepository: HotelRepository
+  - roomRepository: RoomRepository
+  - userRepository: UserRepository
+  - bookingRepository: BookingRepository
+}
+class BookingServiceTest {
+  - service: BookingService
+}
+class CorsConfig
+class DatabaseFactory {
+  - URL: String
+  - USER: String
+  - PASS: String
+}
+class Hasher
+class Hotel {
+  - id: int
+  - name: String
+  - phone: String
+  - address: String
+  - email: String
+  - rooms: ArrayList<Room>
+}
+class HotelController {
+  - bookingService: BookingService
+}
+class HotelControllerTest {
+  - mockMvc: MockMvc
+}
+class HotelRepository
+class Main
+class Room {
+  - capacity: int
+  - available: boolean
+  - hotelId: int
+  - pricePerNight: double
+  - id: int
+  - type: String
+  - roomNumber: String
+}
+class RoomRepository
+class User {
+  - password: String
+  - role: String
+  - hotelId: int
+  - id: int
+  - name: String
+  - email: String
+}
+class UserRepository
+
+AdminController       "1" *-[#595959,plain]-> "bookingService\n1" BookingService        
+AdminController        -[#595959,dashed]->  BookingService        : "«create»"
+AdminController       "1" *-[#595959,plain]-> "hotelRepository\n1" HotelRepository       
+AdminController        -[#595959,dashed]->  HotelRepository       : "«create»"
+AdminController        -[#595959,dashed]->  Room                  : "«create»"
+AdminController        -[#595959,dashed]->  RoomRepository        : "«create»"
+AdminController       "1" *-[#595959,plain]-> "roomRepository\n1" RoomRepository        
+AdminController       "1" *-[#595959,plain]-> "userRepository\n1" UserRepository        
+AdminController        -[#595959,dashed]->  UserRepository        : "«create»"
+AuthController         -[#595959,dashed]->  BookingService        : "«create»"
+AuthController        "1" *-[#595959,plain]-> "bookingService\n1" BookingService        
+BookingController      -[#595959,dashed]->  BookingService        : "«create»"
+BookingController     "1" *-[#595959,plain]-> "bookingService\n1" BookingService        
+BookingRepository      -[#595959,dashed]->  Booking               : "«create»"
+BookingService         -[#595959,dashed]->  Booking               : "«create»"
+BookingService        "1" *-[#595959,plain]-> "bookingRepository\n1" BookingRepository     
+BookingService         -[#595959,dashed]->  BookingRepository     : "«create»"
+BookingService        "1" *-[#595959,plain]-> "hotelRepository\n1" HotelRepository       
+BookingService         -[#595959,dashed]->  HotelRepository       : "«create»"
+BookingService         -[#595959,dashed]->  RoomRepository        : "«create»"
+BookingService        "1" *-[#595959,plain]-> "roomRepository\n1" RoomRepository        
+BookingService         -[#595959,dashed]->  User                  : "«create»"
+BookingService        "1" *-[#595959,plain]-> "userRepository\n1" UserRepository        
+BookingService         -[#595959,dashed]->  UserRepository        : "«create»"
+BookingServiceTest    "1" *-[#595959,plain]-> "service\n1" BookingService        
+BookingServiceTest     -[#595959,dashed]->  BookingService        : "«create»"
+Hotel                 "1" *-[#595959,plain]-> "rooms\n*" Room                  
+HotelController        -[#595959,dashed]->  BookingService        : "«create»"
+HotelController       "1" *-[#595959,plain]-> "bookingService\n1" BookingService        
+HotelRepository        -[#595959,dashed]->  Hotel                 : "«create»"
+RoomRepository         -[#595959,dashed]->  Room                  : "«create»"
+UserRepository         -[#595959,dashed]->  User                  : "«create»"
+@enduml
